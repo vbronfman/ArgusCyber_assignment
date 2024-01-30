@@ -36,6 +36,8 @@ https://plugins.jenkins.io/ghprb/
 
 https://dev.to/oliverjumpertz/setting-up-jenkins-to-handle-github-pull-requests-5bjc ++?
 
+https://youtu.be/aDmeeVDrp0o?si=2kFMXuxJBbVa79ua 
+
 
 =======
 
