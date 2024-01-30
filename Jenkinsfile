@@ -7,11 +7,25 @@ pipeline {
     // docker 161192472568.dkr.ecr.us-east-1.amazonaws.com/jenkins-controller:latest
 
 
-  
+ triggers {
+//            cron('H 0 * * *')
+
+         parameterizedCron('''
+            # leave spaces where you want them around the parameters. They'll be trimmed.
+            # we let the build run with the default name
+            */5 * * * * %FLOW=TEST;PLANET=Pluto
+ #           */3 * * * * %PLANET=Mars
+        ''')
+      //  githubPullRequest(
+   //         autotest: true,
+    //        branches: [[pattern: 'master']])
+    }
+
+
   parameters {
             booleanParam(name: 'RELEASE_BUILD', defaultValue: false, description: 'Is the build for release?')  
             string(name: 'BRANCH', defaultValue: '', description: 'Branch to build?')
-            choice(name: 'FLOW', choices: ['BUILD', 'TEST', 'PULL'], description: 'Select flow')
+            choice(name: 'FLOW', choices: ['','BUILD', 'TEST', 'PULL'], description: 'Select flow')
             choice(name: 'BRANCH', choices: ['master', 'develop'], description: 'Select branch')            
         }
 
@@ -20,6 +34,9 @@ pipeline {
       returnStdout: true,
       script: "echo emailtonotify@email.org"
     ).trim()
+
+    AWS_ACCESS_KEY_ID     = credentials('jenkins-aws-secret-key-id') // secret text 
+    AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
   }
 
 stages {
