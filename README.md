@@ -1,8 +1,7 @@
 # ArgusCyber_assignment
 
 
-<<<<<<< HEAD
-README
+ README
 
 
 EC2 instance with docker
@@ -36,4 +35,4 @@ add credentials
 
 https://docs.aws.amazon.com/AmazonECR/latest/userguide/getting-started-cli.html
 aws ecr get-login-password --region region | docker login --username AWS --password-stdin aws_account_id.dkr.ecr.region.amazonaws.com 
->>>>>>> dee4d4b269fb2b822c10be2fd043d0a3063a1749
+ 
