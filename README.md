@@ -31,6 +31,12 @@ ce29967b507b4396ba6d060a3c1baf35
 
 Install plugin Github Pull Request Builder
 add credentials 
+https://devopscube.com/jenkins-build-trigger-github-pull-request/ 
+https://plugins.jenkins.io/ghprb/ 
+
+https://dev.to/oliverjumpertz/setting-up-jenkins-to-handle-github-pull-requests-5bjc ++?
+
+
 =======
 
 https://docs.aws.amazon.com/AmazonECR/latest/userguide/getting-started-cli.html
