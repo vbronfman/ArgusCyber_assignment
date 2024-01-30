@@ -1,10 +1,23 @@
 # Creates EC2 instance along with creation of key pair. Runs remote-exec
-resource "aws_instance" "webserver" {
+resource "aws_instance" "jenkins-instance" {
   count = 1
   // ami           = try(var.ami,[]) ? var.ami : "ami-041feb57c611358bd" // "ami-01c647eace872fc02" AWS Amazon x86_64
   // ami = try(var.ami,"ami-041feb57c611358bd")
   ami = "ami-041feb57c611358bd"
   instance_type ="t2.micro"
+
+  user_data = <<-EOF
+              #!/bin/bash
+              sudo yum update -y
+              sudo yum install -y docker
+              sudo service docker start
+              sudo usermod -a -G docker ec2-user
+              EOF
+  
+  tags = {
+    Name = "argus-jenkins"
+  }
+
   # https://developer.hashicorp.com/terraform/language/resources/provisioners/remote-exec 
   provisioner "remote-exec" {
     on_failure = continue
@@ -44,7 +57,8 @@ resource "tls_private_key" "rsa" {
 
 resource "local_file" "tf-key" {
     content  = tls_private_key.rsa.private_key_pem
-    filename = "~/.ssh/tf-key-pair"
+    //filename = "~/.ssh/tf-key-pair"
+    filename = "tf-key-pair"
     file_permission = "0600"
     // directory_permission = "0644"
     // provisioner "local-exec" {
@@ -53,15 +67,34 @@ resource "local_file" "tf-key" {
 }
 
 output "server_public_ipv4" {
-    value = aws_instance.webserver[*].public_ip
+    value = aws_instance.jenkins-instance[*].public_ip
 }
+
+
+resource "aws_security_group" "jenkins_access" {
+  name        = "jenkins-access-sg"
+  description = "Security group for Jenkins instance access"
+  
+  # Define ingress rule for HTTP (port 80)
+  ingress {
+    from_port   = 0
+    to_port     = 48080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Allow access from any IPv4 address (open to the world)
+  }
+  
+  # Define egress rule to allow all outbound traffic
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"  # All protocols
+    cidr_blocks = ["0.0.0.0/0"]  # Allow outbound traffic to any destination
+  }
+}
+
+
 
 /*
-resource "aws_security_group" "ssh-access" {
-  
-}
-
-
 resource "aws_eip" "elastic_ip" {
   
 }
