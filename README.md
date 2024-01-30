@@ -30,7 +30,7 @@ ce29967b507b4396ba6d060a3c1baf35
 # 
 
 JENKINS plugins to install :
-- Parameterized Scheduler  to use instead of regular
+- Parameterized Scheduler  to use instead of regular https://plugins.jenkins.io/parameterized-scheduler/ 
     triggers {
         cron('H 0 * * *')
         
