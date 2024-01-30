@@ -29,7 +29,8 @@ Jenkins admin pass # cat /var/jenkins_home/secrets/initialAdminPassword
 ce29967b507b4396ba6d060a3c1baf35
 # 
 
-JENKINS plugins to install :
+4. JENKINS plugins to install :
+   For time sake I'm going to istall it manuall/ Proper way is to update image with forged plugins.txt
 - Parameterized Scheduler  to use instead of regular https://plugins.jenkins.io/parameterized-scheduler/ 
     triggers {
         cron('H 0 * * *')
@@ -52,5 +53,9 @@ aws ecr get-login-password --region region | docker login --username AWS --passw
 
 
 
+5. Create AWS credentials : (or use AWS as cewntials provider?)
+secret text jenkins-aws-secret-key-id
+jenkins-aws-secret-access-key
+Another possible way is  to use  AWS secret manager  plugin and Secret manager
 
  
