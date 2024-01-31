@@ -19,18 +19,19 @@ os_version = platform.version()
 print (os.environ("PWD"))
 print (os.environ("PATH"))
 
+
 # Compose information string
 info_string = f"Current Date & Time: {current_datetime}\n"
 info_string += f"OS Name: {os_name}\n"
 info_string += f"OS Version: {os_version}\n"
 
 # Write information to text file
-with open("/out/artifact.txt", "w") as file:
+with open("artifact.txt", "w") as file:
     file.write(info_string)
 
 print("Information written to artifact.txt successfully.")
 
-if not os.path.isfile("/out/artifact.txt"):
+if not os.path.isfile("artifact.txt"):
     print('File does not exist.')
 
-print ("file is exist: ",os.path.isfile("/out/artifact.txt"))
+print ("file is exist: ",os.path.isfile("artifact.txt"))
