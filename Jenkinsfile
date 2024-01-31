@@ -49,45 +49,6 @@ pipeline {
 
 stages {
 
- stage('Check Build Cause'){
-      steps{
-        script{
-          // get Build Causes
-          // https://stackoverflow.com/questions/43597803/how-to-differentiate-build-triggers-in-jenkins-pipeline
-          
-          echo "${currentBuild.getBuildCauses()}" //Always returns full Cause
-          echo "${currentBuild.getBuildCauses('jenkins.branch.BranchEventCause')}" // Only returns for branch events
-          echo "${currentBuild.getBuildCauses('hudson.triggers.SCMTrigger$SCMTriggerCause')}" // Only returns SCM Trigger
-          echo "${currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')}"  // Only returns if user initiates via Jenkins GUI
-          
-          def GitPushCause = currentBuild.getBuildCauses('jenkins.branch.BranchEventCause')
-          def UserCause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')
-          
-          // If a cause was populated do... 
-          if (GitPushCause) {
-            
-              println "********* Git Push *********"
-              println GitPushCause.getShortDescription()
-              stage ('Stage 1') {
-                  sh 'echo Stage 1'
-              }
-            
-          }  else if (UserCause) {
-
-              println "******* Manual Build Detected *******"
-              println UserCause.getShortDescription()
-              stage ('Stage 2') {
-                  sh 'echo Stage 2'
-              }
-          }else {
-              println "unknown cause"
-          }
-        }
-      }
-    }
-
-
-
     stage ("Build and Deploy") {
         when {  triggeredBy 'GitHubPushCause'   }
                 
