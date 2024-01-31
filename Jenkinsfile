@@ -89,7 +89,7 @@ stages {
 
 
     stage ("Build and Deploy") {
-        when {  triggeredBy 'GitHubWebHookCause'   }
+        when {  triggeredBy 'GitHubPushCause'   }
                 
         steps {
             sh "echo build docker image python with Dockerfile"
