@@ -19,6 +19,8 @@ sudo usermod -a -G docker ec2-user
 ## Login to ECR
 aws ecr get-login-password --region us-east-1 --profile argus 
 docker login --username AWS -p xxxxxxxxxx 161192472568.dkr.ecr.us-east-1.amazonaws.com
+actually  aws ecr get-login-password --region us-east-1 --profile argus | docker login --username AWS --password-stdin 161192472568.dkr.ecr.us-east-1.amazonaws.com
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
 
  docker pull 161192472568.dkr.ecr.us-east-1.amazonaws.com/jenkins-controller:latest
 
