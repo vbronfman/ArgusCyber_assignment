@@ -41,7 +41,7 @@ pipeline {
 
 stages {
     stage ("Build and Deploy") {
-        when {  triggeredBy 'GitLabWebHookCause' }  }
+        when {  triggeredBy 'GitLabWebHookCause'   }
                 
         steps {
             sh "echo build docker image python with Dockerfile"
