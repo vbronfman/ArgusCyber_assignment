@@ -22,7 +22,7 @@ pipeline {
 
   parameters {
             booleanParam(name: 'RELEASE_BUILD', defaultValue: false, description: 'Is the build for release?')  
-            string(name: 'S3_BUCKET', defaultValue: 'vlad-bronfman', description: 'S3 bucket artefact')
+            string(name: 'S3_BUCKET', defaultValue: 'vlad.bronfman', description: 'S3 bucket artefact')
             choice(name: 'FLOW', choices: ['DEPLOY','BUILD', 'TEST', 'PULL'], description: 'Select flow')
             choice(name: 'BRANCH', choices: ['main', 'develop'], description: 'Select branch') 
             string(name:  'AWS_ACCOUNT', defaultValue: '161192472568', description: 'AWS account')
