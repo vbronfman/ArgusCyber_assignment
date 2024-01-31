@@ -85,3 +85,4 @@ jenkins-aws-secret-access-key
 Another possible way is  to use  AWS secret manager  plugin and Secret manager
 
  
+trigger push
