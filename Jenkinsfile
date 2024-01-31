@@ -42,7 +42,7 @@ stages {
     stage ("Build and Deploy") {
         when {  
          anyOf { triggeredBy cause: 'UserIdCause'  ;   triggeredBy 'GitHubPushCause' }
-                expression { params.FLOW != 'TEST' } # ugly trick, I know
+                expression { params.FLOW != 'TEST' } 
         }  
         steps {
             echo "build docker image python with Dockerfile"
