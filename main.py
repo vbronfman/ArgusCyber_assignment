@@ -6,6 +6,7 @@ OS name & version
 '''
 
 import platform
+import os
 from datetime import datetime
 
 # Get current date and time
