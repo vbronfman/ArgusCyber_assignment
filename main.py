@@ -16,8 +16,9 @@ current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 os_name = platform.system()
 os_version = platform.version()
 
-print (os.environ("PWD"))
-print (os.environ("PATH"))
+print (os.environ['PWD'])
+print (os.environ["PATH"])
+print (os.environ["HOME"])
 
 
 # Compose information string
