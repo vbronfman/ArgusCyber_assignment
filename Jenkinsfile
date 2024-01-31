@@ -7,8 +7,6 @@ pipeline {
     // docker 161192472568.dkr.ecr.us-east-1.amazonaws.com/jenkins-controller:latest
 
   triggers {
-//            cron('H 0 * * *')
-
          parameterizedCron('''
             # leave spaces where you want them around the parameters. They'll be trimmed.
             # we let the build run with the default name
@@ -45,7 +43,7 @@ stages {
         when {  
          anyOf { triggeredBy cause: 'UserIdCause'  ;   triggeredBy 'GitHubPushCause' }
                 expression { params.FLOW == 'DEPLOY' } 
-                
+        }  
         steps {
             sh "echo build docker image python with Dockerfile"
         }
