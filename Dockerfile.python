@@ -1,0 +1,14 @@
+# Use the official Python image as base
+FROM python:3.9-slim
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Copy the Python script into the container
+COPY main.py .
+
+# Install required Python modules
+#RUN pip install --upgrade pip
+
+# Command to run the Python script
+CMD ["python", "main.py"]
