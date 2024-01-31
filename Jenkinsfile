@@ -1,11 +1,3 @@
-import hudson.model.*
-import hudson.EnvVars
-import groovy.json.JsonSlurperClassic
-import groovy.json.JsonBuilder
-import groovy.json.JsonOutput
-import java.net.URL
-
-
 pipeline {
   options {
     timeout (time: 35, unit:"MINUTES")
@@ -33,7 +25,7 @@ pipeline {
   parameters {
             booleanParam(name: 'RELEASE_BUILD', defaultValue: false, description: 'Is the build for release?')  
             string(name: 'BRANCH', defaultValue: '', description: 'Branch to build?')
-            choice(name: 'FLOW', choices: ['','BUILD', 'TEST', 'PULL'], description: 'Select flow')
+            choice(name: 'FLOW', choices: ['DEPLOY','BUILD', 'TEST', 'PULL'], description: 'Select flow')
             choice(name: 'BRANCH', choices: ['master', 'develop'], description: 'Select branch')            
         }
 
@@ -50,7 +42,9 @@ pipeline {
 stages {
 
     stage ("Build and Deploy") {
-        when {  triggeredBy 'GitHubPushCause'   }
+        when {  
+         anyOf { triggeredBy cause: 'UserIdCause'  ;   triggeredBy 'GitHubPushCause' }
+                expression { params.FLOW == 'DEPLOY' } 
                 
         steps {
             sh "echo build docker image python with Dockerfile"
@@ -60,7 +54,9 @@ stages {
 
     stage ("Pull and Test") {
         //when { expression { params.FLOW == 'TEST' }  }
-        when { anyOf { triggeredBy cause: 'UserIdCause' ;   triggeredBy 'ParameterizedTimerTriggerCause' }}
+         when { anyOf { triggeredBy cause: 'UserIdCause'  ;   triggeredBy 'ParameterizedTimerTriggerCause' }
+                expression { params.FLOW == 'TEST' } 
+ }
         steps {
             echo "Download most recent artifact from S3 and check if it is empty"
             sh "aws s3 ls"
