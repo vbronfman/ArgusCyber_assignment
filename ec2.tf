@@ -22,7 +22,8 @@ resource "aws_instance" "jenkins-instance" {
   provisioner "remote-exec" {
     on_failure = continue
     inline = [ 
-        "docker version > /tmp/docker.version"
+        "sudo docker version > /tmp/docker.version",
+        "sudo docker run -d -u root --name /argus-jenkins -v //var/run/docker.sock:/var/run/docker.sock -v jenkins_argus:/var/jenkins_home --restart unless-stopped -p 50000:50000 -p 48080:8080 161192472568.dkr.ecr.us-east-1.amazonaws.com/jenkins-controller"
      ]
   }
 # Establishes connection to be used by all

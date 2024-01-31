@@ -6,16 +6,16 @@ pipeline {
     // dockerfile true ? 
     // docker 161192472568.dkr.ecr.us-east-1.amazonaws.com/jenkins-controller:latest
 
-
- triggers {
+  triggers {
 //            cron('H 0 * * *')
 
          parameterizedCron('''
             # leave spaces where you want them around the parameters. They'll be trimmed.
             # we let the build run with the default name
-            */5 * * * * %FLOW=TEST;PLANET=Pluto
- #           */3 * * * * %PLANET=Mars
+            00 17 * * * * %FLOW=TEST;PLANET=Pluto
+ #           */3 * * * * %FLOW=TEST;PLANET=Pluto
         ''')
+    
       //  githubPullRequest(
    //         autotest: true,
     //        branches: [[pattern: 'master']])
@@ -34,7 +34,7 @@ pipeline {
       returnStdout: true,
       script: "echo emailtonotify@email.org"
     ).trim()
-
+    
     AWS_ACCESS_KEY_ID     = credentials('jenkins-aws-secret-key-id') // secret text 
     AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
   }
@@ -51,7 +51,8 @@ stages {
     stage ("Pull and Test") {
         when { expression { params.FLOW == 'TEST' }  }
         steps {
-            sh "echo build docker image python with Dockerfile"
+            echo "Download most recent artifact from S3 and check if it is empty"
+            sh "aws s3 ls"
         }
     }
 
