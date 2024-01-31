@@ -21,7 +21,9 @@ info_string += f"OS Name: {os_name}\n"
 info_string += f"OS Version: {os_version}\n"
 
 # Write information to text file
-with open("artifact.txt", "w") as file:
+with open("/out/artifact.txt", "w") as file:
     file.write(info_string)
 
 print("Information written to artifact.txt successfully.")
+
+print ("file is exist: ",os.path.isfile("/out/artifact.txt"))
