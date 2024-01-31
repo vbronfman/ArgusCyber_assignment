@@ -45,6 +45,20 @@ https://dev.to/oliverjumpertz/setting-up-jenkins-to-handle-github-pull-requests-
 https://youtu.be/aDmeeVDrp0o?si=2kFMXuxJBbVa79ua   https://github.com/darinpope/multibranch-sample-app/tree/main 
 
 Set webhook
+Settings -> Development -> New app 
+http://ec2-3-82-35-54.compute-1.amazonaws.com:48080/github-webhook/
+
+Permissions
+Administration Read-Only
+Checks Read-Writes
+Contents Read Only 
+Metadata Read-Only 
+Pull Requests Read-Only 
+Commit Statuses Read and Write 
+# WEBHOOKS in case Jenkins supposes to manage webhook. not in current case.
+
+Subscribe to events
+Pull request review thread   
 
 =======
 
