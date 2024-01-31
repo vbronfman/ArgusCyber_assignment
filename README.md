@@ -58,8 +58,18 @@ Commit Statuses Read and Write
 # WEBHOOKS in case Jenkins supposes to manage webhook. not in current case.
 
 Subscribe to events
-Pull request review thread   
+Pull request review thread 
 
+Save it
+
+ Generate a private key
+ - save it localy
+ - openssl pkcs8 -topk8 -inform PEM -outform PEM -in /mnt/c/temp/argus-cyber-security-challenge.2024-01-30.private-key.pem -out converted-github-app.pem -nocrypt
+
+   install webhook
+
+5. Install webhook to jenkins
+6. 
 =======
 
 https://docs.aws.amazon.com/AmazonECR/latest/userguide/getting-started-cli.html
@@ -67,7 +77,7 @@ aws ecr get-login-password --region region | docker login --username AWS --passw
 
 
 
-5. Create AWS credentials : (or use AWS as cewntials provider?)
+6. Create AWS credentials : (or use AWS as cewntials provider?)
 secret text jenkins-aws-secret-key-id
 jenkins-aws-secret-access-key
 Another possible way is  to use  AWS secret manager  plugin and Secret manager
