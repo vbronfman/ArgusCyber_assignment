@@ -49,7 +49,7 @@ stages {
             sh "docker build -f Dockerfile.python -t argus/python ."
             sh "docker run --rm -v ${env.WORKSPACE}:/out argus/python"
             sh "ls"
-            sh "cat artifact.txt"
+            sh "cat ${env.WORKSPACE}/artifact.txt"
         }
     }
 
