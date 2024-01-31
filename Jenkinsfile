@@ -49,10 +49,17 @@ stages {
             sh "docker build -f Dockerfile.python -t 512587241100.dkr.ecr.us-east-1.amazonaws.com/vlad.bronfman/argus:latest ."
             sh "docker run --rm -v ${env.WORKSPACE}:/out 512587241100.dkr.ecr.us-east-1.amazonaws.com/vlad.bronfman/argus:latest"
             
-            sh "touch ${env.WORKSPACE}/emptyfile"
-sh "ls ${env.WORKSPACE} "
-            sh "cat ${env.WORKSPACE}/artifact.txt"
+ script{
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    echo 'Copying files'
+                    sh "touch ${env.WORKSPACE}/emptyfile"
+            sh "ls ${env.WORKSPACE} "
+            sh "cat ${env.WORKSPACE}/main.py"
 
+                }
+
+
+            
             sh "docker push 512587241100.dkr.ecr.us-east-1.amazonaws.com/vlad.bronfman/argus:latest"
         }
     }

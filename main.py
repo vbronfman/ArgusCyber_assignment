@@ -27,4 +27,7 @@ with open("/out/artifact.txt", "w") as file:
 
 print("Information written to artifact.txt successfully.")
 
+if not os.path.isfile("/out/artifact.txt"):
+    print('File does not exist.')
+
 print ("file is exist: ",os.path.isfile("/out/artifact.txt"))
