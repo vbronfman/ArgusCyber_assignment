@@ -12,7 +12,7 @@ pipeline {
          parameterizedCron('''
             # leave spaces where you want them around the parameters. They'll be trimmed.
             # we let the build run with the default name
-            00 17 * * * * %FLOW=TEST;PLANET=Pluto
+            0 17 * * * * %FLOW=TEST;PLANET=Pluto
  #           */3 * * * * %FLOW=TEST;PLANET=Pluto
         ''')
     
@@ -41,7 +41,8 @@ pipeline {
 
 stages {
     stage ("Build and Deploy") {
-        when {  expression { params.FLOW == 'BUILD' }  }
+        when {  triggeredBy 'GitLabWebHookCause' }  }
+                
         steps {
             sh "echo build docker image python with Dockerfile"
         }
@@ -49,7 +50,9 @@ stages {
 
 
     stage ("Pull and Test") {
-        when { expression { params.FLOW == 'TEST' }  }
+        //when { expression { params.FLOW == 'TEST' }  }
+        when {          triggeredBy 'TimerTrigger'
+          triggeredBy cause: 'UserIdCause' }
         steps {
             echo "Download most recent artifact from S3 and check if it is empty"
             sh "aws s3 ls"
