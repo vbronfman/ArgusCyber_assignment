@@ -12,7 +12,7 @@ pipeline {
          parameterizedCron('''
             # leave spaces where you want them around the parameters. They'll be trimmed.
             # we let the build run with the default name
-            0 17 * * * * %FLOW=TEST;PLANET=Pluto
+            0 17 * * * %FLOW=TEST;PLANET=Pluto
  #           */3 * * * * %FLOW=TEST;PLANET=Pluto
         ''')
     
