@@ -48,7 +48,7 @@ stages {
             echo "build docker image python with Dockerfile"
             sh "docker build -f Dockerfile.python -t argus/python ."
             sh "docker run --rm -v ${env.WORKSPACE}:/out argus/python"
-            sh "ls ${env.WORKSPACE} ""
+            sh "ls ${env.WORKSPACE} "
             sh "touch ${env.WORKSPACE}/emptyfile"
             sh "cat ${env.WORKSPACE}/artifact.txt"
         }
