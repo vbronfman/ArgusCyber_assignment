@@ -51,8 +51,7 @@ stages {
 
     stage ("Pull and Test") {
         //when { expression { params.FLOW == 'TEST' }  }
-        when {          triggeredBy 'TimerTrigger'
-          triggeredBy cause: 'UserIdCause' }
+        when { anyOf { triggeredBy cause: 'UserIdCause' ;   triggeredBy 'ParameterizedTimerTriggerCause' }}
         steps {
             echo "Download most recent artifact from S3 and check if it is empty"
             sh "aws s3 ls"
