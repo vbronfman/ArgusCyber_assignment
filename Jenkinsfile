@@ -42,10 +42,13 @@ stages {
     stage ("Build and Deploy") {
         when {  
          anyOf { triggeredBy cause: 'UserIdCause'  ;   triggeredBy 'GitHubPushCause' }
-                expression { params.FLOW != 'TEST' } 
+                expression { params.FLOW != 'TEST' } # ugly trick, I know
         }  
         steps {
-            sh "echo build docker image python with Dockerfile"
+            echo "build docker image python with Dockerfile"
+            sh "docker build -f Dockerfile.python -t argus/python ."
+            sh "docker run --rm -v ${PWD}:/app argus/python"
+            sh "cat artifact.txt"
         }
     }
 
