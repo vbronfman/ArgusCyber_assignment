@@ -58,13 +58,14 @@ stages {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                    sh "ls ${env.WORKSPACE} "
                   sh "ls ${env.WORKSPACE}/artifact.txt"
-            }
+            
             
             sh "aws ecr get-login-password --region us-east-1  | docker login --username AWS --password-stdin ${params.AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com"
             echo "Pushing image to ${params.AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/vlad.bronfman:latest"
             sh "docker push ${params.AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/vlad.bronfman:latest"
             echo "Pushing artefact to ${params.S3_BUCKET}"
             sh "aws s3 cp ${env.WORKSPACE}/artifact.txt s3://${params.S3_BUCKET}/ "
+           } // script 
         }
     }
 
