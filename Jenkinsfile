@@ -44,8 +44,9 @@ stages {
 
     stage ("Build and Deploy") {
         when {  
-         anyOf { triggeredBy cause: 'UserIdCause'  ;   triggeredBy 'GitHubPushCause' } // start on push , have to change on push to pr branch
-                expression { params.FLOW != 'TEST' } 
+               branch 'main'
+               anyOf { triggeredBy cause: 'UserIdCause'  ;   triggeredBy 'GitHubPushCause' } // start on push , have to change on push to pr branch
+               expression { params.FLOW != 'TEST' }   
         }  
         steps {
             echo "build docker image python with Dockerfile"
