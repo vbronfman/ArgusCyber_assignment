@@ -79,7 +79,7 @@ _jenkins-aws-secret-access-key_
 ### Stage Build and Deploy 
 1. Builds 'main' branch
 2.  Builds with Dockerfile an image to run [python main.py]
-3. Triggers by push to 'main' branch or manually by selecting "DEPLOY"
+3. Triggers by merge/push to 'main' branch or manually by selecting "DEPLOY"
 4. Script main.py creates writes to file 'artifact.txt' in CWD of container. The folder mapped to //var/jenkins_home/workspace/ArgusCyber of Jenkins container
 [!NOTE] There is an issue with finding out the file 'artifact.txt': it doesn't uppear in /var/jenkins_home/workspace/ArgusCyber . For debug sake, created file 
    
@@ -94,4 +94,7 @@ _jenkins-aws-secret-access-key_
 
 
 
- 
+ ## TODO
+ 1. Fix issue of artifact.txt
+ 2. Set proper condition to select stage: by PR branch 
+ 3. Review checkout    git branch: "${params.BRANCH}"
