@@ -78,7 +78,7 @@ stages {
         steps {
             echo "Download most recent artifact from S3 and check if it is empty"
             sh "aws s3 ls"
-            sh "aws s3api get-object --bucket ${params.S3_BUCKET} --key  artifact.txt" // !!! update with proper path!!!! 
+            sh "aws s3api get-object --bucket ${params.S3_BUCKET} --key  artifact.txt  artifact.txt" // !!! update with proper path!!!! 
 
             script {
             if (fileExists('./artifact.txt')) {
