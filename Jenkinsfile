@@ -3,7 +3,7 @@ pipeline {
     timeout (time: 35, unit:"MINUTES")
   }
   agent any // or none?
-    // dockerfile true ? 
+    // dockerfile true 
     // docker 161192472568.dkr.ecr.us-east-1.amazonaws.com/jenkins-controller:latest
 
   triggers {
