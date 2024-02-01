@@ -3,7 +3,7 @@ pipeline {
     timeout (time: 35, unit:"MINUTES")
   }
   agent any // or none?
-    // dockerfile true ? 
+    // dockerfile true 
     // docker 161192472568.dkr.ecr.us-east-1.amazonaws.com/jenkins-controller:latest
 
   triggers {
@@ -22,11 +22,10 @@ pipeline {
 
   parameters {
             booleanParam(name: 'RELEASE_BUILD', defaultValue: false, description: 'Is the build for release?')  
-            string(name: 'S3_BUCKET', defaultValue: 'vlad-bronfman', description: 'S3 bucket artefact')
+            string(name: 'S3_BUCKET', defaultValue: 'vlad.bronfman', description: 'S3 bucket artefact')
             choice(name: 'FLOW', choices: ['DEPLOY','BUILD', 'TEST', 'PULL'], description: 'Select flow')
             choice(name: 'BRANCH', choices: ['main', 'develop'], description: 'Select branch') 
-            string(name: 'AWS_ACCOUNT', defaultValue: 'null', description: 'AWS account')
-
+            string(name:  'AWS_ACCOUNT', defaultValue: '161192472568', description: 'AWS account')
 
         }
 
@@ -44,8 +43,9 @@ stages {
 
     stage ("Build and Deploy") {
         when {  
-         anyOf { triggeredBy cause: 'UserIdCause'  ;   triggeredBy 'GitHubPushCause' } // start on push , have to change on push to pr branch
-                expression { params.FLOW != 'TEST' } 
+               branch 'main'
+               anyOf { triggeredBy cause: 'UserIdCause'  ;   triggeredBy 'GitHubPushCause' } // start on push , have to change on push to pr branch
+               expression { params.FLOW != 'TEST' }   
         }  
         steps {
             echo "build docker image python with Dockerfile"
@@ -78,7 +78,7 @@ stages {
         steps {
             echo "Download most recent artifact from S3 and check if it is empty"
             sh "aws s3 ls"
-            sh "aws s3api get-object --bucket ${params.S3_BUCKET} --key folder/my_image my_downloaded_image artifact.txt" // !!! update with proper path!!!! 
+            sh "aws s3api get-object --bucket ${params.S3_BUCKET} --key  artifact.txt" // !!! update with proper path!!!! 
 
             script {
             if (fileExists('./artifact.txt')) {
