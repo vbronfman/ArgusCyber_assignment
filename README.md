@@ -38,7 +38,7 @@ User jenkins/jenkins_vlad.bronfman
 
 Settings -> Development -> New app 
 
-http://ec2-3-82-35-54.compute-1.amazonaws.com/github-webhook/
+http://ec2-44-204-45-219.compute-1.amazonaws.com/github-webhook/
 
 Permissions:
 
