@@ -27,7 +27,6 @@ pipeline {
             choice(name: 'BRANCH', choices: ['main', 'develop'], description: 'Select branch') 
             string(name:  'AWS_ACCOUNT', defaultValue: '161192472568', description: 'AWS account')
 
-
         }
 
  environment {
