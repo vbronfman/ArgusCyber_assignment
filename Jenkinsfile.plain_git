@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code from Git repository
+                git branch: 'main', credentialsId: 'argus-jenkins', url: 'git@github.com:vbronfman/ArgusCyber_assignment.git'
+            }
+        }
+        
+        stage('Build Docker Image') {
+             when {
+       //             anyOf {
+                    allOf {
+                        branch "main"
+                        expression { params.BUILD } 
+                    }
+                }
+            steps {
+               
+                // Build Docker image using Dockerfile
+                echo "GOing to build image with docker.build"
+                script {
+                    docker.build('argus-python:latest', '-f Dockerfile.python .')
+                }
+            }
+        }
+        
+        stage('Push Docker Image') {
+            when {
+                 expression {  params.PUSH == "true" }
+            }
+            steps {
+                // Push Docker image to a registry if needed
+                script {
+                    docker.withRegistry("${params.AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com", 'registry-credentials') { // ? what are they 
+                        docker.image(" ${params.AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/vlad.bronfman:latest"").push()
+                    }
+                }
+            }
+        }
+    }
+}
