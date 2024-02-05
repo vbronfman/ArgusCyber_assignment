@@ -35,7 +35,7 @@ pipeline {
                 // Push Docker image to a registry if needed
                 script {
                     docker.withRegistry("${params.AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com", 'registry-credentials') { // ? what are they 
-                        docker.image(" ${params.AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/vlad.bronfman:latest"").push()
+                        docker.image(" ${params.AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/vlad.bronfman:latest").push()
                     }
                 }
             }
