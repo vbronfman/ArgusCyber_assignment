@@ -98,3 +98,19 @@ _jenkins-aws-secret-access-key_
  1. Fix issue of artifact.txt
  2. Set proper condition to select stage: by PR branch 
  3. Review checkout    git branch: "${params.BRANCH}"
+ 4. Use docker plugin instead of sh
+
+
+## Update
+Setup to use regular Git connection in place of Github Pull Request Builder
+
+To simplify Github access create Deploy key. It is regular PKI pair (https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys#deploy-keys)
+
+1.  Create PKI pair at jenkins host . For ex.
+_ssh-keygen -t ed25519 -C "jenkins@ec2-54-145-171-62.compute-1.amazonaws.com"_
+
+2. Add  public to "Deploy keys" of Github repo
+3. Create Jenkins creds of type SSH username with private key and paste newly created private key
+4. Update Global secrurity settings of Jenkins -> Git Hist Key Verification -> "No verification" . 
+Otherwise, login to Git in CLI to populate authorised_keys
+5. In pipeline use 
